@@ -1,6 +1,7 @@
 package com.rycardofarias.github.Springboot_mongoDB.services;
 
 import com.rycardofarias.github.Springboot_mongoDB.domain.User;
+import com.rycardofarias.github.Springboot_mongoDB.dto.UserDTO;
 import com.rycardofarias.github.Springboot_mongoDB.repository.UserRepository;
 import com.rycardofarias.github.Springboot_mongoDB.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,18 @@ public class UserService {
     public List<User> findAll(){
         return repository.findAll();
     }
+
     public User findById(String id) {
         Optional<User> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
     }
+
+    public User insert(User obj) {
+        return repository.insert(obj);
+    }
+
+    public User fromDTO(UserDTO objDto) {
+        return new User(objDto.getId(), objDto.getName(), objDto.getEmail());
+    }
+
 }
